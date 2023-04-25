@@ -1,6 +1,6 @@
-# remark-inline-code-language
+# rehype-inline-code-language
 
-A [Remark](https://github.com/remarkjs/remark) plugin that allows passing a language to inline code. This is useful for syntax highlighting.
+A [Rehype](https://github.com/rehypejs/rehype) plugin that allows passing a language to inline code. This is useful for syntax highlighting.
 
 Note: This is not a standard markdown feature.
 
@@ -19,26 +19,25 @@ npm i -D remark-inline-code-language
 <!-- prettier-ignore -->
 ```js
 import { unified } from "unified"
+import { visit } from "unist-util-visit"
 import remarkParse from "remark-parse"
-import remarkInlineCodeLanguage from "remark-inline-code-language"
+import remarkRehype from "remark-rehype"
+import rehypeStringify from "rehype-stringify"
+import rehypeInlineCodeLanguage from "rehype-inline-code-language"
 
-const mdast = await unified()
+const file = await unified()
 	.use(remarkParse)
-	.parse("`_js console.log()`")
+	.use(remarkRehype)
+	.use(rehypeInlineCodeLanguage)
+	.use(rehypeStringify)
+	.process("`_js console.log()`")
 
-const result = unified()
-	.use(remarkInlineCodeLanguage)
-	.runSync(mdast)
+console.log(String(file))
 
-console.log(JSON.stringify(result.children[0].children[0], null, 4))
 ```
 
-```json
-{
-	"type": "inlineCode",
-	"value": "console.log()",
-	"lang": "js"
-}
+```html
+<p><code class="language-js">console.log()</code></p>
 ```
 
 ## Options
@@ -48,7 +47,7 @@ You can customize the syntax!
 If you are going to only change 1 option, sadly you need to add in all other options too.
 
 ```js
-.use(remarkInlineCodeLanguage, {
+.use(rehypeInlineCodeLanguage, {
 	// ...
 })
 ```

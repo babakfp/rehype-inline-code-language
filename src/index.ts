@@ -6,8 +6,8 @@ interface Options {
 }
 
 interface Inline_Code {
-	type: "inlineCode"
-	value: string
+	type: "element"
+	tagName: "code"
 	lang?: string
 	[key: string]: any
 }
@@ -19,18 +19,23 @@ const default_options: Options = {
 
 export default function attacher(options: Options = default_options) {
 	return function transformer(tree: any) {
-		visit(tree, "inlineCode", function visitor(node) {
-			transform_node(node, options)
+		visit(tree, "element", function visitor(node) {
+			if (node.tagName === "code") {
+				transform_node(node, options)
+			}
 		})
 	}
 }
 
 function transform_node(node: Inline_Code, options: Options) {
-	const transformed_values = get_transformed_values(node, options)
+	const transformed_values = get_transformed_values(node.children[0], options)
 
 	if (transformed_values) {
-		node.value = transformed_values.code
 		node.lang = transformed_values.language
+		node.children[0].value = transformed_values.code
+		node.properties = {
+			className: [`language-${node.lang}`],
+		}
 	}
 
 	return node

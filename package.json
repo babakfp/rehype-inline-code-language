@@ -1,9 +1,9 @@
 {
-	"name": "remark-inline-code-language",
-	"description": "A Remark plugin that allows passing a language to inline code.",
-	"version": "1.0.1",
+	"name": "rehype-inline-code-language",
+	"description": "A Rehype plugin that allows passing a language to inline code.",
+	"version": "1.0.0",
 	"license": "MIT",
-	"repository": "github:babakfp/remark-inline-code-language",
+	"repository": "github:babakfp/rehype-inline-code-language",
 	"main": "./dist/index.js",
 	"type": "module",
 	"scripts": {
@@ -19,7 +19,7 @@
 		"./dist"
 	],
 	"keywords": [
-		"remark",
-		"remark-plugin"
+		"rehype",
+		"rehype-plugin"
 	]
 }
