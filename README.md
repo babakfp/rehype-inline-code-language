@@ -19,7 +19,6 @@ npm i -D remark-inline-code-language
 <!-- prettier-ignore -->
 ```js
 import { unified } from "unified"
-import { visit } from "unist-util-visit"
 import remarkParse from "remark-parse"
 import remarkRehype from "remark-rehype"
 import rehypeStringify from "rehype-stringify"
